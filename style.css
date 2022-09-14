@@ -1,0 +1,32 @@
+/*Element Styling*/
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: auto;
+    text-align: center;
+}
+
+#charHolder, #skillProfs {
+    padding: 1em 0px 0px 0px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+#featList li:not(:first-child) {
+    padding: 1em 0px 0px 0px;
+}
+
+/*Text Decorations*/
+
+.bold {
+    font-weight: bold;
+}
+
+.italic {
+    font-style: italic;
+}
