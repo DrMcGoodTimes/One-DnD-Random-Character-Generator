@@ -6,7 +6,21 @@ const CHARHOLDER = document.querySelector('#charHolder');
 //Basic Functions
 const ROLLER = function(num) {
     return (Math.floor(Math.random()*num));
-}
+};
+
+const DUPECHECK = function(val, arr) {
+    let holder = val;
+    while (arr.indexOf(holder) >= 0) {
+        holder = Object.keys(SKILLS)[ROLLER(Object.keys(SKILLS).length)];
+    };
+};
+
+const APPENDTOLIST = function(val, targetElement, targetArray) {
+    let newItem = document.createElement('li');
+    newItem.appendChild(document.createTextNode(val));
+    targetElement.appendChild(newItem);
+    targetArray.push(val);
+};
 
 //D&D Information
 const SKILLS = {'Athletics': 0, 'Acrobatics': 1, 'Sleight of Hand': 1, 'Stealth': 1, 'Arcana': 3, 'History': 3, 'Investigation': 3, 'Nature': 3, 'Religion': 3, 'Animal Handling': 4, 'Insight': 4, 'Medicine': 4, 'Perception': 4, 'Survival': 4, 'Deception': 5, 'Intimidation': 5, 'Performance': 5, 'Persuasion': 5};
@@ -26,15 +40,15 @@ const FEATS = {
 
 const SPELLS = {
     'Arcane': {
-        0: ['Acid Splash','Blade Ward','Chill Touch','Dancing Lights','Fire Bolt','Friends','Light','Mage Hand','Mending','Message','Minor Illusion','Poison Spray','Prestidigitation','Ray of Frost','Shocking Grasp','True Strike','Vicious Mockery'],
-        1: ['Alarm','Armor of Agathys','Arms of Hadar','Burning Hands','Charm Person','Chromatic Orb','Color Spray','Comprehend Languages','Detect Magic','Disguise Self','Dissonant Whispers','Expeditious Retreat','False Life','Feather Fall','Find Familiar','Fog Cloud','Grease','Hellish Rebuke','Hex','Identify','Illusory Script','Jump','Longstrider','Mage Armor','Magic Missle','Protection from Evil and Good','Ray of Sickness','Shield','Silent Image','Sleep','Tasha\'s Hideous Laughter','Tenser\'s Floating Disk','Thunderwave','Unseen Servant','Witch Bolt']
+        cantrip: ['Acid Splash','Blade Ward','Chill Touch','Dancing Lights','Fire Bolt','Friends','Light','Mage Hand','Mending','Message','Minor Illusion','Poison Spray','Prestidigitation','Ray of Frost','Shocking Grasp','True Strike','Vicious Mockery'],
+        lvl1: ['Alarm','Armor of Agathys','Arms of Hadar','Burning Hands','Charm Person','Chromatic Orb','Color Spray','Comprehend Languages','Detect Magic','Disguise Self','Dissonant Whispers','Expeditious Retreat','False Life','Feather Fall','Find Familiar','Fog Cloud','Grease','Hellish Rebuke','Hex','Identify','Illusory Script','Jump','Longstrider','Mage Armor','Magic Missle','Protection from Evil and Good','Ray of Sickness','Shield','Silent Image','Sleep','Tasha\'s Hideous Laughter','Tenser\'s Floating Disk','Thunderwave','Unseen Servant','Witch Bolt']
 }, 'Divine': {
-        0: ['Guidance','Light','Resistance','Sacred Flame','Spare the Dying','Thaumaturgy'],
-        1: ['Bane','Bless','Command','Compelled Duel','Cure Wounds','Detect Evil and Good','Detect Magic','Detect Poison and Disease','Divine Favor','Guiding Bolt','Healing Word','Heroism','Inflict Wounds','Protection from Evil and Good','Purify Food and Drink','Sanctuary','Searing Strike','Shield of Faith','Thunderous Smite','Wrathful Smite']
+        cantrip: ['Guidance','Light','Resistance','Sacred Flame','Spare the Dying','Thaumaturgy'],
+        lvl1: ['Bane','Bless','Command','Compelled Duel','Cure Wounds','Detect Evil and Good','Detect Magic','Detect Poison and Disease','Divine Favor','Guiding Bolt','Healing Word','Heroism','Inflict Wounds','Protection from Evil and Good','Purify Food and Drink','Sanctuary','Searing Strike','Shield of Faith','Thunderous Smite','Wrathful Smite']
 }, 'Primal': {
-        0: ['Druidcraft','Guidance','Mending','Message','Poison Spray','Produce Flame','Resistance','Shillelagh','Spare the Dying','Thorn Whip'],
-        1: ['Animal Friendship','Create or Destory Water','Cure Wounds','Detect Magic','Detect Poison and Disease','Ensnaring Strike','Entangle','Faerie Fire','Fog Cloud','Goodberry','Hail of Thorns','Healing Word','Hunter\'s Mark','Jump','Longstrider','Purift Food and Drink','Speak with Animals','Thunderwave']
-}}
+        cantrip: ['Druidcraft','Guidance','Mending','Message','Poison Spray','Produce Flame','Resistance','Shillelagh','Spare the Dying','Thorn Whip'],
+        lvl1: ['Animal Friendship','Create or Destory Water','Cure Wounds','Detect Magic','Detect Poison and Disease','Ensnaring Strike','Entangle','Faerie Fire','Fog Cloud','Goodberry','Hail of Thorns','Healing Word','Hunter\'s Mark','Jump','Longstrider','Purift Food and Drink','Speak with Animals','Thunderwave']
+}};
 
 const HUMAN = {name: "human", features: ['<span class="bold italic">Resourceful</span>. You gain Inspiration whenever you finish a Long Rest', '<span class="bold italic">Skillful</span>. You gain Proficiency in one Skill of your choice', '<span class="bold italic">Versatile</span>. You gain a 1st-level Feat of your choice.']};
 const DRAGONBORN = {name: "dragonborn",sub: {'black': 'acid', 'blue': 'lightning', 'brass': 'fire', 'bronze': 'lightning', 'copper': 'acid', 'gold': 'fire', 'green': 'poison', 'red': 'fire', 'silver': 'cold', 'white': 'cold'}, features: ['<span class="bold italic">Draconic Ancestry.</span> Somewhere in your lineage, your ancestor was a <span class="dragonbornColor"></span> dragon, which is associated with <span class="dragonbornElement"></span>.', '<span class="bold italic">Breath Weapon.</span> As an action, you exhale destructive energy in a 15-foot cone. Each creature in that area must make a Dex saving throw against a DC of 8 + your Con mod + your Proficiency Bonus. On a failed save, a creature takes 1d10 + your character level in <span class="dragonbornElement"></span> damage. On a successful save, a creature takes half as much damage. You can use this Breath Weapon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest.', '<span class="bold italic">Damage Resistance.</span> You have Resistance to <span class="dragonbornElement"></span>.', '<span class="bold italic">Darkvision.</span> You have Darkvision witha  range of 60 feet.', '<span class="bold italic">Draconic Language.</span> You instinctively know the language of dragons.  You can therefore speak, read, and write Draconic.']};
@@ -44,7 +58,7 @@ const ORC = {name: 'orc', features: ['<span class="bold italic">Adrenaline Rush.
 
 const RACES = [HUMAN, DWARF, HALFLING, ORC, DRAGONBORN];
 
-const TOOLS = ['Alchemist\'s Supplies', 'Brewer\'s Supplies', 'Calligrapher\'s Supplies', 'Carpenter\'s Tools', 'Cartographer\'s Tools', 'Cobbler\'s Tools', 'Cook\'s Utensils', 'Glassblower\'s Tools', 'Jeweler\'s Tools', 'Leatherworker\'s Tools', 'Mason\'s Tools', 'Painter\'s Supplies', 'Potter\'s Tools', 'Smith\'s Tools', 'Tinker\'s Tools', 'Weaver\'s Tools', 'Woodcarver\'s Tools', 'Disguise Kit', 'Forgery Kit', 'Dice Set', 'Dragonchess Set', 'Playing card Set', 'Three-Dragon Ante Set', 'Herbalism Kit', 'Bagpipes', 'Drum', 'Dulcimer', 'Flute', 'Lute', 'Lyre', 'Horn', 'Pan Flute', "Shawm", 'Viol', 'Navigator\'s Tool', 'Poisoner\'s Kit', 'Thieves\' Tools', 'Land Vehicles', 'Water Vehicles']
+const TOOLS = ['Alchemist\'s Supplies', 'Brewer\'s Supplies', 'Calligrapher\'s Supplies', 'Carpenter\'s Tools', 'Cartographer\'s Tools', 'Cobbler\'s Tools', 'Cook\'s Utensils', 'Glassblower\'s Tools', 'Jeweler\'s Tools', 'Leatherworker\'s Tools', 'Mason\'s Tools', 'Painter\'s Supplies', 'Potter\'s Tools', 'Smith\'s Tools', 'Tinker\'s Tools', 'Weaver\'s Tools', 'Woodcarver\'s Tools', 'Disguise Kit', 'Forgery Kit', 'Dice Set', 'Dragonchess Set', 'Playing Card Set', 'Three-Dragon Ante Set', 'Herbalism Kit', 'Bagpipes', 'Drum', 'Dulcimer', 'Flute', 'Lute', 'Lyre', 'Horn', 'Pan Flute', "Shawm", 'Viol', 'Navigator\'s Tool', 'Poisoner\'s Kit', 'Thieves\' Tools', 'Land Vehicles', 'Water Vehicles']
 
 //Generate Button
 CHARGEN.addEventListener('click', function() {
@@ -61,6 +75,7 @@ CHARGEN.addEventListener('click', function() {
     const FEATARR = [];
     const SPELL0ARR = [];
     const SPELL1ARR = [];
+    const MAGICARR = [];
 
     //Assigning gender
     const GENDER = ['male', 'female']
@@ -84,9 +99,7 @@ CHARGEN.addEventListener('click', function() {
             <ul id='featList'></ul>
         </div>
 
-        <div id='spells'>You know the following spells:
-            <div id='spellList'></div>
-        </div>
+        <div id='spells'></div>
         `;
 
     //Tagetting Generated HTML Elements
@@ -95,7 +108,7 @@ CHARGEN.addEventListener('click', function() {
     const SKILLLIST = document.querySelector('#skillList');
     const TOOLLIST = document.querySelector('#toolList');
     const FEATLIST = document.querySelector('#featList');
-    const SPELLLIST = document.querySelector('#spellList');
+    const SPELLDIV = document.querySelector('#spells');
 
     //Fill in Subrace
 
@@ -107,11 +120,7 @@ CHARGEN.addEventListener('click', function() {
     
     //Fill In Skills
     if (RACE.hasOwnProperty('skill')) {
-        let raceSkill = document.createElement('li');
-        raceSkill.appendChild(document.createTextNode(RACE.skill));
-        SKILLLIST.appendChild(raceSkill);
-        SKILLARR.push(RACE.skill);
-        console.log(SKILLARR);
+        APPENDTOLIST(RACE.skill, SKILLLIST, SKILLARR);
     };
 
     if (RACE.name === 'human') {
@@ -120,10 +129,7 @@ CHARGEN.addEventListener('click', function() {
             while (SKILLARR.indexOf(skillHolder) >= 0) {
                 skillHolder = Object.keys(SKILLS)[ROLLER(Object.keys(SKILLS).length)];
             };
-            let newSkill = document.createElement('li');
-            newSkill.appendChild(document.createTextNode(skillHolder));
-            SKILLLIST.appendChild(newSkill);
-            SKILLARR.push(skillHolder);
+            APPENDTOLIST(skillHolder, SKILLLIST, SKILLARR);
         };
     } else {
         for (let i = 0; i < 2; i++) {
@@ -131,10 +137,7 @@ CHARGEN.addEventListener('click', function() {
             while (SKILLARR.indexOf(skillHolder) >= 0) {
                 skillHolder = Object.keys(SKILLS)[ROLLER(Object.keys(SKILLS).length)];
             };
-            let newSkill = document.createElement('li');
-            newSkill.appendChild(document.createTextNode(skillHolder));
-            SKILLLIST.appendChild(newSkill);
-            SKILLARR.push(skillHolder);
+            APPENDTOLIST(skillHolder, SKILLLIST, SKILLARR);
         };
     }
 
@@ -145,21 +148,16 @@ CHARGEN.addEventListener('click', function() {
             while (TOOLARR.indexOf(dwarfToolHolder) >= 0) {
                 dwarfToolHolder = RACE.racetools[ROLLER(RACE.racetools.length)];
             };
-            let newDwarfTool = document.createElement('li');
-            newDwarfTool.appendChild(document.createTextNode(dwarfToolHolder));
-            TOOLLIST.appendChild(newDwarfTool);
-            TOOLARR.push(dwarfToolHolder);
-        }
+            APPENDTOLIST(dwarfToolHolder, TOOLLIST, TOOLARR);
+        };
     };
 
     let toolHolder = TOOLS[ROLLER(TOOLS.length)];
     while (TOOLARR.indexOf(toolHolder) >= 0) {
         toolHolder = TOOLS[ROLLER(TOOLS.length)];
     };
-    let newTool = document.createElement('li');
-    newTool.appendChild(document.createTextNode(toolHolder));
-    TOOLLIST.appendChild(newTool);
-    TOOLARR.push(toolHolder);
+    APPENDTOLIST(toolHolder, TOOLLIST, TOOLARR);
+    
 
     //Fill in Feats
     if (RACE.name === 'human') {
@@ -186,13 +184,10 @@ CHARGEN.addEventListener('click', function() {
     if (FEATARR.indexOf('Crafter') >= 0) {
         for (let i = 0; i < 3; i++) {
             let toolHolder = TOOLS[ROLLER(16)];
-        while (TOOLARR.indexOf(toolHolder) >= 0) {
-            toolHolder = TOOLS[ROLLER(16)];
-        };
-        let newTool = document.createElement('li');
-        newTool.appendChild(document.createTextNode(toolHolder));
-        TOOLLIST.appendChild(newTool);
-        TOOLARR.push(toolHolder);
+            while (TOOLARR.indexOf(toolHolder) >= 0) {
+                toolHolder = TOOLS[ROLLER(16)];
+            };
+        APPENDTOLIST(toolHolder, TOOLLIST, TOOLARR);
         };
     };
 
@@ -200,13 +195,10 @@ CHARGEN.addEventListener('click', function() {
     if (FEATARR.indexOf('Musician') >= 0) {
         for (let i = 0; i < 3; i++) {
             let toolHolder = TOOLS[ROLLER(10)+24];
-        while (TOOLARR.indexOf(toolHolder) >= 0) {
-            toolHolder = TOOLS[ROLLER(10)+24];
-        };
-        let newTool = document.createElement('li');
-        newTool.appendChild(document.createTextNode(toolHolder));
-        TOOLLIST.appendChild(newTool);
-        TOOLARR.push(toolHolder);
+            while (TOOLARR.indexOf(toolHolder) >= 0) {
+                toolHolder = TOOLS[ROLLER(10)+24];
+            };
+        APPENDTOLIST(toolHolder, TOOLLIST, TOOLARR);
         };
     };
     
@@ -214,26 +206,38 @@ CHARGEN.addEventListener('click', function() {
     if (FEATARR.indexOf('Skilled') >= 0) {
         for (let i = 0; i < 3; i++) {
             let skillHolder = Object.keys(SKILLS)[ROLLER(Object.keys(SKILLS).length)];
-        while (SKILLARR.indexOf(skillHolder) >= 0) {
+            while (SKILLARR.indexOf(skillHolder) >= 0) {
                 skillHolder = Object.keys(SKILLS)[ROLLER(Object.keys(SKILLS).length)];
             };
-        let newSkill = document.createElement('li');
-        newSkill.appendChild(document.createTextNode(skillHolder));
-        SKILLLIST.appendChild(newSkill);
-        SKILLARR.push(skillHolder);
+            APPENDTOLIST(skillHolder, SKILLLIST, SKILLARR);
         };
     };
 
     //Add Spells (First add spells to arrays (race, then feat), then add the list elements and their text seperately)
     if (FEATARR.indexOf('Magic Initiate') >= 0) {
-
-        for (let i = 0; i < FEATARR.length; i++) {
-            if (FEATARR[i] === 'Magic Initiate') {
-
-            }
-        }
-    }  else {
-        
+        SPELLDIV.innerHTML = 'You know the following spells:<div id="spellList"><div id="cantrips"><span class="bold italic">Cantrips</span><ul id="cantripList"></ul></div><div id="lvl1Spells"><span class="bold italic">Level One Spells</span><ul id="lvl1SpellList"></ul></div></div>';
+    } else {
+        SPELLDIV.innerHTML = '';
     }
 
+    const cantripList = document.querySelector('#cantripList');
+    const lvl1SpellList = document.querySelector('#lvl1SpellList');
+
+    FEATARR.forEach((feat) => {
+        if (feat === 'Magic Initiate') {
+            let magicType = Object.keys(SPELLS)[ROLLER(Object.keys(SPELLS).length)];
+            MAGICARR.push(magicType);
+
+            for (let i = 0; i < 2; i++) {
+                let spellHolder = SPELLS[magicType]['cantrip'][ROLLER(SPELLS[magicType]['cantrip'].length)];
+                while (SPELL0ARR.indexOf(spellHolder) >= 0) {
+                    spellHolder = SPELLS[magicType]['cantrip'][ROLLER(SPELLS[magicType]['cantrip'].length)];
+                }
+                APPENDTOLIST(spellHolder + ' (' + magicType + ')',cantripList,SPELL0ARR);
+            }
+            
+            let spellHolder = SPELLS[magicType]['lvl1'][ROLLER(SPELLS[magicType]['lvl1'].length)];
+            APPENDTOLIST(spellHolder + ' (' + magicType + ')', lvl1SpellList, SPELL1ARR);
+        }
+    })
 });
