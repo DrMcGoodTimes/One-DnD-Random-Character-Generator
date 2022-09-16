@@ -1,4 +1,20 @@
+/* Color Palette
+Origin: https://www.colourlovers.com/palette/1352432/Dungeons_and_Dragons
+
+#FFFEBD
+#F7CE65
+#930C10
+#290000
+#030303
+*/
+
 /*Div Styling*/
+
+body {
+    background-color: #FFFEBD;
+    color: #030303;
+}
+
 .container {
     display: flex;
     align-items: center;
@@ -19,6 +35,21 @@ ul {
 
 #featList li:not(:first-child) {
     padding: 1em 0px 0px 0px;
+}
+
+#charGen {
+    border: none;
+    background-color: #F7CE65;
+    border-radius: 3px;
+    font-size: 1.5em;
+    color: #290000;
+}
+
+h1 {
+    color: #930C10;
+    font-size: 2.5em;
+    margin-top: 0.1em;
+    margin-bottom: 0.25em;
 }
 
 /*Text Decorations*/
