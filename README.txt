@@ -7,3 +7,5 @@ I'm going to try and update this project regularly, adding more features as more
 I did the initial work for this over the course of a weekend and I'm just making the repo now, which is why it isn't really starting at the beginning.  But I consider that a positive, so you can't see all the poor design decisions I made initially.
 
 But yeah, have fun with it.
+
+Link to the page for ease: https://drmcgoodtimes.github.io/One-DnD-Random-Character-Generator/
