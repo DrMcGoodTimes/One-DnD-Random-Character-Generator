@@ -28,7 +28,7 @@ const SKILLS = {'Athletics': 0, 'Acrobatics': 1, 'Sleight of Hand': 1, 'Stealth'
 const FEATS = {
     'Alert': 'Always on the lookout for danger, you gain the following benefits:<br><span class="bold">Initiative Proficiency.</span> When you roll Initiative, you can add your Proficiency Bonus to the roll.<br><span class="bold">Initiative Swap.</span> Immediately after you roll Initiative, you can swap your Initiative with the Initiative of one willing ally in the same combat. You can\'t make this swap if you or the ally is incapacitated.<br>',
     'Crafter': 'You are adept at crafting things and bargaining with merchants, granting you the following benefits:<br><span class="bold">Tool Proficiency.</span> You gain Tool Proficiency with threee different Artisan\'s Tools of your choice.<br><span class="bold">Discount</span> Whenever you buy a nonmagical item, you receive a 20% discount on it.<br><span class="bold">Faster Crafting</span> When you craft an item using a tool with which you have Tool Proficiency, the required crafting time is reduced by 20%.<br>',
-    'Healer': 'You have the training and intuition to administer first aid and other care effectively, granting you the following benefits:<br><span class="bold">Battle Medic.</span> If you have a Healer\'s Kit, you can expend one use of it an tend to a creature within 5 feet of you as an Action. That creature can expend one of its Hit Dice, and you then roll that die. The creature regains a number of Hit Points equal to the roll plus your Proficiency Bonus.<br><span class="bold">Healing Rerolls.</span> Whwnever you roll a die to determine the number of Hit Points you restore with a spell or with this feat\'s Battle Medic benefit, you can reroll the die if it rolls a 1, and you must use the new roll.<br>',
+    'Healer': 'You have the training and intuition to administer first aid and other care effectively, granting you the following benefits:<br><span class="bold">Battle Medic.</span> If you have a Healer\'s Kit, you can expend one use of it an tend to a creature within 5 feet of you as an Action. That creature can expend one of its Hit Dice, and you then roll that die. The creature regains a number of Hit Points equal to the roll plus your Proficiency Bonus.<br><span class="bold">Healing Rerolls.</span> Whenever you roll a die to determine the number of Hit Points you restore with a spell or with this feat\'s Battle Medic benefit, you can reroll the die if it rolls a 1, and you must use the new roll.<br>',
     'Lucky': 'You have inexplicable luck that can kick in at just the right moment, granting you the following benefits:<br><span class="bold">Luck Points.</span> You have a number of Luck Points equal to your Proficiency Bonus. You can spend the points on the benefits below, and you regain your expended Luck Points when you finish a Long Rest.<br><span class="bold">Advantage.</span> Immediately after you roll a d20 for a d20 Test, you can spend 1 Luck Point to give yourself Advantage to the roll.<br><span class="bold">Disadvantage.</span> When a creature rolls a d20 for an attack roll against you, you can spend 1 Luck Point to import Disadvantage on that roll.',
     'Magic Initiate': 'You have learned the basics of a particular magical tradition. Choose one Spell list: Arcane, Divine, or Primal. You can the following benefits related to that choice.<br><span class="bold">Two Cantrips.</span> You learn two cantrips of your choice from the spell list.<br><span class="bold">1st-Level Spell.</span> Choose one 1st-level Spell from the spell list. You always have that Spell prepared. You can case it once without a Spell Slot, and you regain the ability to cast it in that way when you finish a Long Rest. You can also cast the Spell using any Spell Slots you have.<br> Int, Wis, and Cha is your spellcasting ability for these Spells (choose when you select this Feat). Consult the <span class="italic">Player\'s Handbook</span> for the rules on spellcasting.<br>Whenever you gain a new level, you can replace one of the Spells you chose for this Feat with a different Spell of the same level from the chosen Spell list.',
     'Musician': 'You are a practiced musician, granting you the following benefits:<br><span class="bold">Instrument Training.</span> You gain Tool Prodiciency with three Musical Instruments of your choice.<br><span class="bold">Inspiring Song.</span> As you finish a Short Rest or a Long Rest, you can play a song on a Musical Instrument with which you have Tool Proficiency and give you Inspiration to allies who hear the song. The number of allies you can affect in this way equals your Proficiency Bonus.',
@@ -51,10 +51,11 @@ const SPELLS = {
 }};
 
 const HUMAN = {name: "human", features: ['<span class="bold italic">Resourceful</span>. You gain Inspiration whenever you finish a Long Rest', '<span class="bold italic">Skillful</span>. You gain Proficiency in one Skill of your choice', '<span class="bold italic">Versatile</span>. You gain a 1st-level Feat of your choice.']};
-const DRAGONBORN = {name: "dragonborn",sub: {'black': 'acid', 'blue': 'lightning', 'brass': 'fire', 'bronze': 'lightning', 'copper': 'acid', 'gold': 'fire', 'green': 'poison', 'red': 'fire', 'silver': 'cold', 'white': 'cold'}, features: ['<span class="bold italic">Draconic Ancestry.</span> Somewhere in your lineage, your ancestor was a <span class="dragonbornColor"></span> dragon, which is associated with <span class="dragonbornElement"></span>.', '<span class="bold italic">Breath Weapon.</span> As an action, you exhale destructive energy in a 15-foot cone. Each creature in that area must make a Dex saving throw against a DC of 8 + your Con mod + your Proficiency Bonus. On a failed save, a creature takes 1d10 + your character level in <span class="dragonbornElement"></span> damage. On a successful save, a creature takes half as much damage. You can use this Breath Weapon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest.', '<span class="bold italic">Damage Resistance.</span> You have Resistance to <span class="dragonbornElement"></span>.', '<span class="bold italic">Darkvision.</span> You have Darkvision witha  range of 60 feet.', '<span class="bold italic">Draconic Language.</span> You instinctively know the language of dragons.  You can therefore speak, read, and write Draconic.']};
+const ARDLING = {name: 'ardling', sub:{'exalted': ['Thaumaturgy', 'Cat, eagle, goat, mule'], 'heavenly': ['Light', 'Elephant, owl, pig, stork'],'idyllic': ['Guidance', 'Bear, dog, raven, toad']}, features: ['<span class="bold italic">Angelic Flight.</span> As a Bonus Action, you sprout spectral wings for a moment and fly up to a number of feet equal to your Speed.  If you are in the air at the end of this movement, you fall if nothing is holding you aloft.<br>You can use this Bonus Action a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest.','<span class="bold italic">Celestial Legacy.</span> You are the recipient of a celetial legacy that grants you magical abilities. Your legacy is that of the <span class="ardlingLegacy"></span>, which are associated with <span class="ardlingAlign"></span> planes. You gain the initial benefit of the chosen legacy: a cantrip that you learn (listed under your spell list). You also choose the animal you most closely resemble (example for this legacy are: <span class="ardlingAnimals"></span>).<br>Intelligence, Wisdom, and Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the legacy).','<span class="bold italic">Damage Resistance.</span> You have Resistance to radiant damage.']}
+const DRAGONBORN = {name: "dragonborn",sub: {'black': 'acid', 'blue': 'lightning', 'brass': 'fire', 'bronze': 'lightning', 'copper': 'acid', 'gold': 'fire', 'green': 'poison', 'red': 'fire', 'silver': 'cold', 'white': 'cold'}, features: ['<span class="bold italic">Draconic Ancestry.</span> Somewhere in your lineage, your ancestor was a <span class="dragonbornColor"></span> dragon, which is associated with <span class="dragonbornElement"></span>.', '<span class="bold italic">Breath Weapon.</span> As an action, you exhale destructive energy in a 15-foot cone. Each creature in that area must make a Dex saving throw against a DC of 8 + your Con mod + your Proficiency Bonus. On a failed save, a creature takes 1d10 + your character level in <span class="dragonbornElement"></span> damage. On a successful save, a creature takes half as much damage. You can use this Breath Weapon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest.', '<span class="bold italic">Damage Resistance.</span> You have Resistance to <span class="dragonbornElement"></span> damage.', '<span class="bold italic">Darkvision.</span> You have Darkvision witha  range of 60 feet.', '<span class="bold italic">Draconic Language.</span> You instinctively know the language of dragons.  You can therefore speak, read, and write Draconic.']};
 const DWARF = {name: 'dwarf', features: ['<span class="bold italic">Darkvision.</span> You have Darkvision with a range of 60 feet.', '<span class="bold italic">Dwarven Resilience.</span> You have Resistance to Poison Damage. You also have Advantage on saving throws you make to avoid/end the Poisoned Condition on yourself.', '<span class="bold italic">Dwarven Toughness.</span> Your Hit Point Maximum increases by your current level, and it increases by 1 again whenever you gain a level.', '<span class="bold italic">Forge Wise.</span> Your divine creator gave you an uncanny affinity for working with stone or metal.  You gain Tool Proficiency with two of the following options of your choice: Jeweler\'s Tools, Mason\'s Tools, Smith\'s Tools, or Tinker\'s Tools.', '<span class="bold italic">Stonecunning.</span> As a bonus action, you gain Tremorsense with a range of 60 feet for 10 minutes.  You must be on a stone surface or touching such a surface to use this ability. The stone can be natural or worked. <br>You can use this Bonus Action a number of times equal to your proficiency Bonus, and you regain all expended uses when you finish a Long Rest.'], racetools: ['Jeweler\'s Tools', 'Mason\'s Tools', 'Smith\'s Tools', 'Tinker\'s Tools']}
 const HALFLING = {name: 'halfling', features: ['<span class="bold italic">Brave.</span> You have Advantage on saving throws you make to avoid/end the Frightened Condition on yourself.', '<span class="bold italic">Halfling Nimbleness.</span> You can move thorugh the space of any creature that is of a Size larger than yours, but you can\'t stop there.', '<span class="bold italic">Luck.</span> When you roll a 1 during a d20 Test, you can reroll the die, and you must use the new roll.', '<span class="bold italic">Naturally Stealthy.</span> You have Proficiency in the Stealth skill.'], skill: "Stealth"};
-const ORC = {name: 'orc', features: ['<span class="bold italic">Adrenaline Rush.</span> You can take the Dash Action as a Bonus Action. When you do so, you gain a number of Temporary Hit Points equal to your Proficiency Bonus.<br>You can use this trait a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest.', '<span class="bold italic">Darkvision.</span> You have Darkvision with a range of 60 feet.', '<span class="bold italic">Powerful Build.</span> You count as one Size larger when determining your carrying capacity and the weight you can push, drag, or lift.', '<span class="bold italic">Relentless Endurance.</span> When you are reduced to 0 Hit Points but not killed outright, you can drop to 1 Hit Point instead. Once you use this trait, you can\'t do so again until you finish a Long Rest.']}
+const ORC = {name: 'orc', features: ['<span class="bold italic">Adrenaline Rush.</span> You can take the Dash Action as a Bonus Action. When you do so, you gain a number of Temporary Hit Points equal to your Proficiency Bonus.<br>You can use this trait a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest.', '<span class="bold italic">Darkvision.</span> You have Darkvision with a range of 60 feet.', '<span class="bold italic">Powerful Build.</span> You count as one Size larger when determining your carrying capacity and the weight you can push, drag, or lift.', '<span class="bold italic">Relentless Endurance.</span> When you are reduced to 0 Hit Points but not killed outright, you can drop to 1 Hit Point instead. Once you use this trait, you can\'t do so again until you finish a Long Rest.']};
 
 const RACES = [HUMAN, DWARF, HALFLING, ORC, DRAGONBORN];
 
@@ -76,6 +77,7 @@ CHARGEN.addEventListener('click', function() {
     const SPELL0ARR = [];
     const SPELL1ARR = [];
     const MAGICARR = [];
+    const SPELLDUPEARR = [];
 
     //Assigning gender
     const GENDER = ['male', 'female']
@@ -110,12 +112,21 @@ CHARGEN.addEventListener('click', function() {
     const FEATLIST = document.querySelector('#featList');
     const SPELLDIV = document.querySelector('#spells');
 
-    //Fill in Subrace
-
-
     //Fill In Race Features
     for (let i = 0; i < RACE.features.length; i++) {
         RACEFEATURES.innerHTML += '<div class="raceFeature">' + RACE.features[i] + '</div>';
+    };
+
+    //Fill in Subrace Details
+    if (RACE.name === "dragonborn") {
+        const DRAGONBORNCOLOR = document.querySelector('.dragonbornColor');
+        DRAGONBORNCOLOR.innerHTML = subrace;
+        const DRAGONBORNELEMENT = document.querySelectorAll('.dragonbornElement');
+        for (let i = 0; i < DRAGONBORNELEMENT.length; i++) {
+            DRAGONBORNELEMENT[i].innerHTML = RACE.sub[subrace];
+        }
+    } else if (RACE.name === 'ardling') {
+        
     };
     
     //Fill In Skills
@@ -172,9 +183,11 @@ CHARGEN.addEventListener('click', function() {
     };
 
     let featHolder = Object.keys(FEATS)[ROLLER(Object.keys(FEATS).length)];
-    while (FEATARR.indexOf(featHolder) >= 0) {
+    if (featHolder !== 'Magic Initiate') {
+        while (FEATARR.indexOf(featHolder) >= 0) {
         featHolder = Object.keys(FEATS)[ROLLER(Object.keys(FEATS).length)];
         };
+    };
     let newFeat = document.createElement('li');
     newFeat.innerHTML = '<span class="bold italic">' + featHolder + '.</span> ' + FEATS[featHolder];
     FEATLIST.appendChild(newFeat);
@@ -226,18 +239,24 @@ CHARGEN.addEventListener('click', function() {
     FEATARR.forEach((feat) => {
         if (feat === 'Magic Initiate') {
             let magicType = Object.keys(SPELLS)[ROLLER(Object.keys(SPELLS).length)];
+            while (MAGICARR.indexOf(magicType) >= 0) {
+                magicType = Object.keys(SPELLS)[ROLLER(Object.keys(SPELLS).length)];
+            }
             MAGICARR.push(magicType);
 
             for (let i = 0; i < 2; i++) {
                 let spellHolder = SPELLS[magicType]['cantrip'][ROLLER(SPELLS[magicType]['cantrip'].length)];
-                while (SPELL0ARR.indexOf(spellHolder) >= 0) {
+                while (SPELLDUPEARR.indexOf(spellHolder) >= 0) {
                     spellHolder = SPELLS[magicType]['cantrip'][ROLLER(SPELLS[magicType]['cantrip'].length)];
                 }
                 APPENDTOLIST(spellHolder + ' (' + magicType + ')',cantripList,SPELL0ARR);
+                SPELLDUPEARR.push(spellHolder);
             }
             
             let spellHolder = SPELLS[magicType]['lvl1'][ROLLER(SPELLS[magicType]['lvl1'].length)];
             APPENDTOLIST(spellHolder + ' (' + magicType + ')', lvl1SpellList, SPELL1ARR);
+            SPELLDUPEARR.push(spellHolder);
+
         }
     })
 });
