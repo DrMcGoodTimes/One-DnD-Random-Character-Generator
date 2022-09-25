@@ -51,13 +51,44 @@ const SPELLS = {
 }};
 
 const HUMAN = {name: "human", features: ['<span class="bold italic">Resourceful</span>. You gain Inspiration whenever you finish a Long Rest', '<span class="bold italic">Skillful</span>. You gain Proficiency in one Skill of your choice', '<span class="bold italic">Versatile</span>. You gain a 1st-level Feat of your choice.']};
-const ARDLING = {name: 'ardling', sub:{'exalted': ['Thaumaturgy', 'Cat, eagle, goat, mule'], 'heavenly': ['Light', 'Elephant, owl, pig, stork'],'idyllic': ['Guidance', 'Bear, dog, raven, toad']}, features: ['<span class="bold italic">Angelic Flight.</span> As a Bonus Action, you sprout spectral wings for a moment and fly up to a number of feet equal to your Speed.  If you are in the air at the end of this movement, you fall if nothing is holding you aloft.<br>You can use this Bonus Action a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest.','<span class="bold italic">Celestial Legacy.</span> You are the recipient of a celetial legacy that grants you magical abilities. Your legacy is that of the <span class="ardlingLegacy"></span>, which are associated with <span class="ardlingAlign"></span> planes. You gain the initial benefit of the chosen legacy: a cantrip that you learn (listed under your spell list). You also choose the animal you most closely resemble (example for this legacy are: <span class="ardlingAnimals"></span>).<br>Intelligence, Wisdom, and Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the legacy).','<span class="bold italic">Damage Resistance.</span> You have Resistance to radiant damage.']}
-const DRAGONBORN = {name: "dragonborn",sub: {'black': 'acid', 'blue': 'lightning', 'brass': 'fire', 'bronze': 'lightning', 'copper': 'acid', 'gold': 'fire', 'green': 'poison', 'red': 'fire', 'silver': 'cold', 'white': 'cold'}, features: ['<span class="bold italic">Draconic Ancestry.</span> Somewhere in your lineage, your ancestor was a <span class="dragonbornColor"></span> dragon, which is associated with <span class="dragonbornElement"></span>.', '<span class="bold italic">Breath Weapon.</span> As an action, you exhale destructive energy in a 15-foot cone. Each creature in that area must make a Dex saving throw against a DC of 8 + your Con mod + your Proficiency Bonus. On a failed save, a creature takes 1d10 + your character level in <span class="dragonbornElement"></span> damage. On a successful save, a creature takes half as much damage. You can use this Breath Weapon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest.', '<span class="bold italic">Damage Resistance.</span> You have Resistance to <span class="dragonbornElement"></span> damage.', '<span class="bold italic">Darkvision.</span> You have Darkvision witha  range of 60 feet.', '<span class="bold italic">Draconic Language.</span> You instinctively know the language of dragons.  You can therefore speak, read, and write Draconic.']};
-const DWARF = {name: 'dwarf', features: ['<span class="bold italic">Darkvision.</span> You have Darkvision with a range of 60 feet.', '<span class="bold italic">Dwarven Resilience.</span> You have Resistance to Poison Damage. You also have Advantage on saving throws you make to avoid/end the Poisoned Condition on yourself.', '<span class="bold italic">Dwarven Toughness.</span> Your Hit Point Maximum increases by your current level, and it increases by 1 again whenever you gain a level.', '<span class="bold italic">Forge Wise.</span> Your divine creator gave you an uncanny affinity for working with stone or metal.  You gain Tool Proficiency with two of the following options of your choice: Jeweler\'s Tools, Mason\'s Tools, Smith\'s Tools, or Tinker\'s Tools.', '<span class="bold italic">Stonecunning.</span> As a bonus action, you gain Tremorsense with a range of 60 feet for 10 minutes.  You must be on a stone surface or touching such a surface to use this ability. The stone can be natural or worked. <br>You can use this Bonus Action a number of times equal to your proficiency Bonus, and you regain all expended uses when you finish a Long Rest.'], racetools: ['Jeweler\'s Tools', 'Mason\'s Tools', 'Smith\'s Tools', 'Tinker\'s Tools']}
+const ARDLING = {name: 'ardling', sub:[
+    {name: 'exalted', spell: ['Thaumaturgy'], animals: 'Cat, eagle, goat, mule', align: 'Chaotic Good'},
+    {name: 'heavenly', spell: ['Light'], animals: 'Elephant, owl, pig, stork', align: 'Lawful Good'},
+    {name: 'idyllic', spell: ['Guidance'], animals: 'Bear, dog, raven, toad', align: 'Neutral Good'}], 
+features: ['<span class="bold italic">Angelic Flight.</span> As a Bonus Action, you sprout spectral wings for a moment and fly up to a number of feet equal to your Speed.  If you are in the air at the end of this movement, you fall if nothing is holding you aloft.<br>You can use this Bonus Action a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest.','<span class="bold italic">Celestial Legacy.</span> You are the recipient of a celetial legacy that grants you magical abilities. Your legacy is that of the <span class="ardlingLegacy"></span>, which are associated with <span class="ardlingAlign"></span> planes. You gain the initial benefit of the chosen legacy: a cantrip that you learn (listed under your spell list). You also choose the animal you most closely resemble (example for this legacy are: <span class="ardlingAnimals"></span>).<br>Intelligence, Wisdom, and Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the legacy).','<span class="bold italic">Damage Resistance.</span> You have Resistance to radiant damage.']}
+const DRAGONBORN = {name: "dragonborn", sub: [
+    {name: 'black', type: 'acid'},
+    {name: 'blue', type: 'lightning'},
+    {name: 'brass', type: 'fire'},
+	{name: 'bronze', type: 'lightning'},
+	{name: 'copper', type: 'acid'},
+	{name: 'gold', type: 'fire'},
+	{name: 'green', type: 'poison'},
+	{name: 'red', type: 'red'},
+	{name: 'silver', type: 'cold'},
+	{name: 'white', type: 'cold'}], 
+features: ['<span class="bold italic">Draconic Ancestry.</span> Somewhere in your lineage, your ancestor was a <span class="dragonbornColor"></span> dragon, which is associated with <span class="dragonbornElement"></span>.', '<span class="bold italic">Breath Weapon.</span> As an action, you exhale destructive energy in a 15-foot cone. Each creature in that area must make a Dex saving throw against a DC of 8 + your Con mod + your Proficiency Bonus. On a failed save, a creature takes 1d10 + your character level in <span class="dragonbornElement"></span> damage. On a successful save, a creature takes half as much damage. You can use this Breath Weapon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest.', '<span class="bold italic">Damage Resistance.</span> You have Resistance to <span class="dragonbornElement"></span> damage.', '<span class="bold italic">Darkvision.</span> You have Darkvision witha  range of 60 feet.', '<span class="bold italic">Draconic Language.</span> You instinctively know the language of dragons.  You can therefore speak, read, and write Draconic.']};
+const DWARF = {name: 'dwarf', features: ['<span class="bold italic">Darkvision.</span> You have Darkvision with a range of 60 feet.', '<span class="bold italic">Dwarven Resilience.</span> You have Resistance to Poison Damage. You also have Advantage on saving throws you make to avoid/end the Poisoned Condition on yourself.', '<span class="bold italic">Dwarven Toughness.</span> Your Hit Point Maximum increases by your current level, and it increases by 1 again whenever you gain a level.', '<span class="bold italic">Forge Wise.</span> Your divine creator gave you an uncanny affinity for working with stone or metal.  You gain Tool Proficiency with two of the following options of your choice: Jeweler\'s Tools, Mason\'s Tools, Smith\'s Tools, or Tinker\'s Tools.', '<span class="bold italic">Stonecunning.</span> As a bonus action, you gain Tremorsense with a range of 60 feet for 10 minutes.  You must be on a stone surface or touching such a surface to use this ability. The stone can be natural or worked. <br>You can use this Bonus Action a number of times equal to your proficiency Bonus, and you regain all expended uses when you finish a Long Rest.'], racetools: ['Jeweler\'s Tools', 'Mason\'s Tools', 'Smith\'s Tools', 'Tinker\'s Tools']};
+const ELF = {name: 'elf', sub: [
+    {name: 'drow', spell: ['Dancing Lights'], darkvision: 120, feature: 'The range of your Darkvision increases to 120 feet. You also know the Dancing Lights cantrip.'},
+    {name: 'high', spell: ['Prestidigitation'], darkvision: 60, feature: 'You know the Prestidigitation cantrip. Whenever you finish a Long Rest, you can replace that cantrip with a different cantrip from the Arcane Spell List.'},
+    {name: 'wood', spell: ['Druidcraft'], darkvision: 60, feature: 'Your Speed increases to 35 feet. You also know the Druidcraft cantrip.'}
+], features: ['<span class="bold italic">Darkvision.</span> You have Darkvision with a range of <span class="elfDarkvision"></span> feet.', '<span class="bold italic">Elven Lineage.</span> You are part of an elven lineage that grants you supernatural abilities. You are either a Drow, the linerage of the Underdark, a High Elf, the lineage of fey crossings and other magical locations, or a Wood Elf, the lineage of primeval forests. You gain the 1st level benefits of that lineage: <span class="elfLineage"></span><br>Intelligence, Wisdom, or Charisma is your spellcasting ability for the Spells you case with this trait (choose the ability when you select the lineage).', '<span class="bold italic">Fey Ancestry.</span> You have Advantage on saving throws you make to avoid or end the Charmed Condition on yourself.', '<span class="bold italic">Keen Senses.</span> You have Proficiency in the Perception skill.', '<span class="bold italic">Trance.</span> You don\'t need to sleep, and magic can\'t put you to sleep. You can finish a Long Rest in 4 hours if you spend those hours in a trancelike meditation, during which you retain consciousness.'], skill: 'Perception'};
+const GNOME = {name: 'gnome', sub: [
+    {name: 'forest', spell: ['Minor Illusion'], feature: 'You know the Minor Illusion cantrip.<br>You can also cast the Speak with Animals spell with this trait. You can cast it a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest. You can also use any Spell Slots you have to cast the spell.'},
+    {name: 'rock', spell: ['Mending', 'Prestidigitation'], feature: 'You know the Mending and Prestidigitation cantrips<br>In addition, you can spend 10 minutes casting Prestidigitation to create a Tiny clockwork device (AC 5, 1 HP), such as a toy, a fire starter, or a music box. Casting the spell in this way consumes 10 GP worth of raw material (string, gears, and the like), which you provice during the casting.<br>When you create the device, you determine its function by choosing one effect from Prestidigitation; the device produces that effect whenever you or another creature takes a Bonus Action to touch the device and activate it. If the chosen effect has options within it, you choose one of those options for the device when you create it.  For example, if you choose the spell\'s ignite-extinguish effect, you determine whether the device ignites or extinguishes first; the device doesn\'t do both.<br>You can have three such devices in existence at a time, and each one dismantles itself 8 hours after its creation. You can also touch one of your devices and dismantle it as an Action. After a device is dismantled, yhe 10 GP of materials used to create it can be reclaimed.'}
+], features: ['<span class="bold italic">Darkvision.</span> You have Darkvision with a range of 60 feet.', '<span class="bold italic">Gnomish Cunning.</span> You have Advantage on Intelligence, Wisdom, and Charisma saving throws.', '<span class="bold italic">Gnomish Lineage.</span> You are part of a gnomish lineage that grants you supernatural abilities.  You are either a forest gnome, the lineage of magic-filled forest, or a rock gnome, the lineage of pimeval mountains. You gain the following benefits from your lineage:<br><span class="gnomeLineage"></span><br>Intelligence, Wisdom, or Charisma is your spellcasting ability for the Spells you cast with this trait (choose the ability when you select the lineage).']};
 const HALFLING = {name: 'halfling', features: ['<span class="bold italic">Brave.</span> You have Advantage on saving throws you make to avoid/end the Frightened Condition on yourself.', '<span class="bold italic">Halfling Nimbleness.</span> You can move thorugh the space of any creature that is of a Size larger than yours, but you can\'t stop there.', '<span class="bold italic">Luck.</span> When you roll a 1 during a d20 Test, you can reroll the die, and you must use the new roll.', '<span class="bold italic">Naturally Stealthy.</span> You have Proficiency in the Stealth skill.'], skill: "Stealth"};
 const ORC = {name: 'orc', features: ['<span class="bold italic">Adrenaline Rush.</span> You can take the Dash Action as a Bonus Action. When you do so, you gain a number of Temporary Hit Points equal to your Proficiency Bonus.<br>You can use this trait a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest.', '<span class="bold italic">Darkvision.</span> You have Darkvision with a range of 60 feet.', '<span class="bold italic">Powerful Build.</span> You count as one Size larger when determining your carrying capacity and the weight you can push, drag, or lift.', '<span class="bold italic">Relentless Endurance.</span> When you are reduced to 0 Hit Points but not killed outright, you can drop to 1 Hit Point instead. Once you use this trait, you can\'t do so again until you finish a Long Rest.']};
+const TIEFLING = {name: 'tiefling', sub: [
+    {name: 'abyssal', spell: ['Poison Spray', 'Thaumaturgy'], type: 'poison', align: 'Chaotic Evil'},
+    {name: 'chthonic', spell: ['Chill Touch', 'Thaumaturgy'], type: 'necrotic', align: 'Neutral Evil'},
+    {name: 'infernal', spell: ['Fire Bolt', 'Thaumaturgy'], type: 'fire', align: 'Lawful Evil'},
+], features: ['<span class="bold italic">Darkvision.</span> You have Darkvision with a range of 60 feet.', '<span class="bold italic">Fiendish Legacy.</span> You are a recipient of a fiendish legacy that grants you supernatural abilities. Your legacy is of the <span class="tieflingLegacy"></span>, which is associated with <span class="tieflingAlign"></span> planes. You gain the 1st level benefir of that legacy: You have Resistance to <span class="tieflingElement"></span> damage. You also know the <span class="tieflingSpell"></span> cantrip.<br>Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the lineage).', '<span class="bold italic">Otherworldly Presence.</span> You know the Thaumaturgy cantrip. When you cast it with this trait, the spell uses the same spellcasting ability you use for your Fiendish Legacy trait.']}
 
-const RACES = [HUMAN, DWARF, HALFLING, ORC, DRAGONBORN];
+//const RACES = [HUMAN, DWARF, HALFLING, ORC, DRAGONBORN, ARDLING, GNOME, TIEFLING];
+
+const RACES = [TIEFLING];
 
 const TOOLS = ['Alchemist\'s Supplies', 'Brewer\'s Supplies', 'Calligrapher\'s Supplies', 'Carpenter\'s Tools', 'Cartographer\'s Tools', 'Cobbler\'s Tools', 'Cook\'s Utensils', 'Glassblower\'s Tools', 'Jeweler\'s Tools', 'Leatherworker\'s Tools', 'Mason\'s Tools', 'Painter\'s Supplies', 'Potter\'s Tools', 'Smith\'s Tools', 'Tinker\'s Tools', 'Weaver\'s Tools', 'Woodcarver\'s Tools', 'Disguise Kit', 'Forgery Kit', 'Dice Set', 'Dragonchess Set', 'Playing Card Set', 'Three-Dragon Ante Set', 'Herbalism Kit', 'Bagpipes', 'Drum', 'Dulcimer', 'Flute', 'Lute', 'Lyre', 'Horn', 'Pan Flute', "Shawm", 'Viol', 'Navigator\'s Tool', 'Poisoner\'s Kit', 'Thieves\' Tools', 'Land Vehicles', 'Water Vehicles']
 
@@ -65,9 +96,11 @@ const TOOLS = ['Alchemist\'s Supplies', 'Brewer\'s Supplies', 'Calligrapher\'s S
 CHARGEN.addEventListener('click', function() {
     //Assigning race and Lineage
     const RACE = RACES[ROLLER(RACES.length)];
+    let subraceRoll;
     let subrace = "";
     if (RACE.hasOwnProperty('sub')) {
-        subrace = Object.keys(RACE.sub)[ROLLER(Object.keys(RACE.sub).length)];
+        subraceRoll = ROLLER(RACE.sub.length);
+        subrace = RACE.sub[subraceRoll].name;
     }
 
     //Assigning arrays for the purposes of checking dupes/futureproofing
@@ -122,11 +155,34 @@ CHARGEN.addEventListener('click', function() {
         const DRAGONBORNCOLOR = document.querySelector('.dragonbornColor');
         DRAGONBORNCOLOR.innerHTML = subrace;
         const DRAGONBORNELEMENT = document.querySelectorAll('.dragonbornElement');
+        const dragonbornElement = RACE.sub[subraceRoll].type;
         for (let i = 0; i < DRAGONBORNELEMENT.length; i++) {
-            DRAGONBORNELEMENT[i].innerHTML = RACE.sub[subrace];
+            DRAGONBORNELEMENT[i].innerHTML = dragonbornElement;
         }
     } else if (RACE.name === 'ardling') {
-        
+        const ARDLINGLEGACY = document.querySelector('.ardlingLegacy');
+        ARDLINGLEGACY.innerHTML = subrace;
+        const ARDLINGALIGN = document.querySelector('.ardlingAlign');
+        ARDLINGALIGN.innerHTML = RACE.sub[subraceRoll].align;
+        const ARDLINGANIMALS = document.querySelector('.ardlingAnimals');
+        ARDLINGANIMALS.innerHTML = RACE.sub[subraceRoll].animals;
+    } else if (RACE.name === 'elf') {
+        const ELFDARKVISION = document.querySelector('.elfDarkvision');
+        const ELFLINEAGE = document.querySelector('.elfLineage');
+        ELFDARKVISION.innerHTML = RACE.sub[subraceRoll].darkvision;
+        ELFLINEAGE.innerHTML = RACE.sub[subraceRoll].feature;
+    } else if (RACE.name === 'gnome') {
+        const GNOMELINEAGE = document.querySelector('.gnomeLineage');
+        GNOMELINEAGE.innerHTML = RACE.sub[subraceRoll].feature;
+    } else if (RACE.name === 'tiefling') {
+        const TIEFLINGLEGACY = document.querySelector('.tieflingLegacy');
+        const TIEFLINGELEMENT = document.querySelector('.tieflingElement');
+        const TIEFLINGALIGN = document.querySelector('.tieflingAlign');
+        const TIEFLINGSPELL = document.querySelector('.tieflingSpell');
+        TIEFLINGLEGACY.innerHTML = RACE.sub[subraceRoll].name;
+        TIEFLINGELEMENT.innerHTML = RACE.sub[subraceRoll].type;
+        TIEFLINGALIGN.innerHTML = RACE.sub[subraceRoll].align;
+        TIEFLINGSPELL.innerHTML = RACE.sub[subraceRoll].spell[0];
     };
     
     //Fill In Skills
@@ -227,7 +283,7 @@ CHARGEN.addEventListener('click', function() {
     };
 
     //Add Spells (First add spells to arrays (race, then feat), then add the list elements and their text seperately)
-    if (FEATARR.indexOf('Magic Initiate') >= 0) {
+    if (FEATARR.indexOf('Magic Initiate') >= 0 || (RACE.hasOwnProperty('sub') && RACE.sub[subraceRoll].hasOwnProperty('spell'))) {
         SPELLDIV.innerHTML = 'You know the following spells:<div id="spellList"><div id="cantrips"><span class="bold italic">Cantrips</span><ul id="cantripList"></ul></div><div id="lvl1Spells"><span class="bold italic">Level One Spells</span><ul id="lvl1SpellList"></ul></div></div>';
     } else {
         SPELLDIV.innerHTML = '';
@@ -235,6 +291,14 @@ CHARGEN.addEventListener('click', function() {
 
     const cantripList = document.querySelector('#cantripList');
     const lvl1SpellList = document.querySelector('#lvl1SpellList');
+
+    //Add in Racial Cantrip
+    if (RACE.hasOwnProperty('sub') && RACE.sub[subraceRoll].hasOwnProperty('spell')) {
+        for (let i = 0; i < RACE.sub[subraceRoll].spell.length; i++) {
+            APPENDTOLIST(RACE.sub[subraceRoll].spell[i] + ' (Racial)', cantripList,SPELL0ARR);
+            SPELLDUPEARR.push(RACE.sub[subraceRoll].spell);
+        }
+    }
 
     FEATARR.forEach((feat) => {
         if (feat === 'Magic Initiate') {
@@ -259,4 +323,5 @@ CHARGEN.addEventListener('click', function() {
 
         }
     })
+
 });
