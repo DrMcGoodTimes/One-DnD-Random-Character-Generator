@@ -86,9 +86,7 @@ const TIEFLING = {name: 'tiefling', sub: [
     {name: 'infernal', spell: ['Fire Bolt', 'Thaumaturgy'], type: 'fire', align: 'Lawful Evil'},
 ], features: ['<span class="bold italic">Darkvision.</span> You have Darkvision with a range of 60 feet.', '<span class="bold italic">Fiendish Legacy.</span> You are a recipient of a fiendish legacy that grants you supernatural abilities. Your legacy is of the <span class="tieflingLegacy"></span>, which is associated with <span class="tieflingAlign"></span> planes. You gain the 1st level benefir of that legacy: You have Resistance to <span class="tieflingElement"></span> damage. You also know the <span class="tieflingSpell"></span> cantrip.<br>Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the lineage).', '<span class="bold italic">Otherworldly Presence.</span> You know the Thaumaturgy cantrip. When you cast it with this trait, the spell uses the same spellcasting ability you use for your Fiendish Legacy trait.']}
 
-//const RACES = [HUMAN, DWARF, HALFLING, ORC, DRAGONBORN, ARDLING, GNOME, TIEFLING];
-
-const RACES = [TIEFLING];
+const RACES = [HUMAN, DWARF, HALFLING, ORC, DRAGONBORN, ARDLING, GNOME, TIEFLING];
 
 const TOOLS = ['Alchemist\'s Supplies', 'Brewer\'s Supplies', 'Calligrapher\'s Supplies', 'Carpenter\'s Tools', 'Cartographer\'s Tools', 'Cobbler\'s Tools', 'Cook\'s Utensils', 'Glassblower\'s Tools', 'Jeweler\'s Tools', 'Leatherworker\'s Tools', 'Mason\'s Tools', 'Painter\'s Supplies', 'Potter\'s Tools', 'Smith\'s Tools', 'Tinker\'s Tools', 'Weaver\'s Tools', 'Woodcarver\'s Tools', 'Disguise Kit', 'Forgery Kit', 'Dice Set', 'Dragonchess Set', 'Playing Card Set', 'Three-Dragon Ante Set', 'Herbalism Kit', 'Bagpipes', 'Drum', 'Dulcimer', 'Flute', 'Lute', 'Lyre', 'Horn', 'Pan Flute', "Shawm", 'Viol', 'Navigator\'s Tool', 'Poisoner\'s Kit', 'Thieves\' Tools', 'Land Vehicles', 'Water Vehicles']
 
