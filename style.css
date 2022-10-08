@@ -52,6 +52,18 @@ h1 {
     margin-bottom: 0.25em;
 }
 
+#attHolder {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 30px;
+}
+
+.attribute {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 2px;
+}
+
 /*Text Decorations*/
 
 .bold {
