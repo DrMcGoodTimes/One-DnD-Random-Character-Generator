@@ -3,16 +3,25 @@ const CONTAINER = document.querySelector('.container');
 const CHARGEN = document.querySelector('#charGen');
 const CHARHOLDER = document.querySelector('#charHolder');
 
+//Attribute Score Selectors
+const STRSCORE = document.querySelector('#strScore');
+const DEXSCORE = document.querySelector('#dexScore')
+const CONSCORE = document.querySelector('#conScore')
+const INTSCORE = document.querySelector('#intScore')
+const WISSCORE = document.querySelector('#wisScore')
+const CHASCORE = document.querySelector('#chaScore')
+
 //Basic Functions
 const ROLLER = function(num) {
     return (Math.floor(Math.random()*num));
 };
 
-const DUPECHECK = function(val, arr) {
+const DUPECHECK = function(val, reference, arr) {
     let holder = val;
-    while (arr.indexOf(holder) >= 0) {
-        holder = Object.keys(SKILLS)[ROLLER(Object.keys(SKILLS).length)];
+    while (reference, arr.indexOf(holder) >= 0) {
+        holder = Object.keys(arr)[ROLLER(Object.keys(arr).length)];
     };
+    return holder;
 };
 
 const APPENDTOLIST = function(val, targetElement, targetArray) {
@@ -22,8 +31,15 @@ const APPENDTOLIST = function(val, targetElement, targetArray) {
     targetArray.push(val);
 };
 
+const ADDTEXTTOSPANS = function(val, targetSpan) {
+    let holder = document.querySelectorAll(targetSpan);
+    for (let i = 0; i < holder.length; i++) {
+        holder[i].innerHTML = val;
+    };
+};
+
 //D&D Information
-const SKILLS = {'Athletics': 0, 'Acrobatics': 1, 'Sleight of Hand': 1, 'Stealth': 1, 'Arcana': 3, 'History': 3, 'Investigation': 3, 'Nature': 3, 'Religion': 3, 'Animal Handling': 4, 'Insight': 4, 'Medicine': 4, 'Perception': 4, 'Survival': 4, 'Deception': 5, 'Intimidation': 5, 'Performance': 5, 'Persuasion': 5};
+const SKILLS = {"Athletics": "Str", "Acrobatics": "Dex", "Sleight of Hand": "Dex", "Stealth": "Dex", "Arcana": "Int", "History": "Int", "Investigation": "Int", "Nature": "Int", "Religion": "Int", "Animal Handling": "Wis", "Insight": "Wis", "Medicine": "Wis", "Perception": "Wis", "Survival": "Wis", "Deception": "Cha", "Intimidation": "Cha", "Performance": "Cha", "Persuasion": "Cha"};
 
 const FEATS = {
     'Alert': 'Always on the lookout for danger, you gain the following benefits:<br><span class="bold">Initiative Proficiency.</span> When you roll Initiative, you can add your Proficiency Bonus to the roll.<br><span class="bold">Initiative Swap.</span> Immediately after you roll Initiative, you can swap your Initiative with the Initiative of one willing ally in the same combat. You can\'t make this swap if you or the ally is incapacitated.<br>',
@@ -86,7 +102,7 @@ const TIEFLING = {name: 'tiefling', sub: [
     {name: 'infernal', spell: ['Fire Bolt', 'Thaumaturgy'], type: 'fire', align: 'Lawful Evil'},
 ], features: ['<span class="bold italic">Darkvision.</span> You have Darkvision with a range of 60 feet.', '<span class="bold italic">Fiendish Legacy.</span> You are a recipient of a fiendish legacy that grants you supernatural abilities. Your legacy is of the <span class="tieflingLegacy"></span>, which is associated with <span class="tieflingAlign"></span> planes. You gain the 1st level benefir of that legacy: You have Resistance to <span class="tieflingElement"></span> damage. You also know the <span class="tieflingSpell"></span> cantrip.<br>Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the lineage).', '<span class="bold italic">Otherworldly Presence.</span> You know the Thaumaturgy cantrip. When you cast it with this trait, the spell uses the same spellcasting ability you use for your Fiendish Legacy trait.']}
 
-const RACES = [HUMAN, DWARF, HALFLING, ORC, DRAGONBORN, ARDLING, GNOME, TIEFLING];
+const RACES = [HUMAN, DWARF, HALFLING, ORC, DRAGONBORN, ARDLING, GNOME, TIEFLING, ELF];
 
 const TOOLS = ['Alchemist\'s Supplies', 'Brewer\'s Supplies', 'Calligrapher\'s Supplies', 'Carpenter\'s Tools', 'Cartographer\'s Tools', 'Cobbler\'s Tools', 'Cook\'s Utensils', 'Glassblower\'s Tools', 'Jeweler\'s Tools', 'Leatherworker\'s Tools', 'Mason\'s Tools', 'Painter\'s Supplies', 'Potter\'s Tools', 'Smith\'s Tools', 'Tinker\'s Tools', 'Weaver\'s Tools', 'Woodcarver\'s Tools', 'Disguise Kit', 'Forgery Kit', 'Dice Set', 'Dragonchess Set', 'Playing Card Set', 'Three-Dragon Ante Set', 'Herbalism Kit', 'Bagpipes', 'Drum', 'Dulcimer', 'Flute', 'Lute', 'Lyre', 'Horn', 'Pan Flute', "Shawm", 'Viol', 'Navigator\'s Tool', 'Poisoner\'s Kit', 'Thieves\' Tools', 'Land Vehicles', 'Water Vehicles']
 
@@ -110,13 +126,8 @@ CHARGEN.addEventListener('click', function() {
     const MAGICARR = [];
     const SPELLDUPEARR = [];
 
-    //Assigning gender
-    const GENDER = ['male', 'female']
-    let randGender = GENDER[ROLLER(GENDER.length)];
-    //changeGender won't work right now; I'll need to incorperate jQuery in order to declare the function after the creation of the info in CHARHOLDER.
-
     //Setting the text onto the document
-    CHARHOLDER.innerHTML = `You are a <span id="genderSpan" onclick="changeGender()">${randGender}</span>${' ' + subrace} ${RACE.name} with the following abilities:
+    CHARHOLDER.innerHTML = `You are a ${subrace} ${RACE.name} with the following abilities:
 
         <div id='raceFeatures'></div>
         
@@ -150,37 +161,22 @@ CHARGEN.addEventListener('click', function() {
 
     //Fill in Subrace Details
     if (RACE.name === "dragonborn") {
-        const DRAGONBORNCOLOR = document.querySelector('.dragonbornColor');
-        DRAGONBORNCOLOR.innerHTML = subrace;
-        const DRAGONBORNELEMENT = document.querySelectorAll('.dragonbornElement');
-        const dragonbornElement = RACE.sub[subraceRoll].type;
-        for (let i = 0; i < DRAGONBORNELEMENT.length; i++) {
-            DRAGONBORNELEMENT[i].innerHTML = dragonbornElement;
-        }
+        ADDTEXTTOSPANS(subrace, '.dragonbornColor');
+        ADDTEXTTOSPANS(RACE.sub[subraceRoll].type, '.dragonbornElement');
     } else if (RACE.name === 'ardling') {
-        const ARDLINGLEGACY = document.querySelector('.ardlingLegacy');
-        ARDLINGLEGACY.innerHTML = subrace;
-        const ARDLINGALIGN = document.querySelector('.ardlingAlign');
-        ARDLINGALIGN.innerHTML = RACE.sub[subraceRoll].align;
-        const ARDLINGANIMALS = document.querySelector('.ardlingAnimals');
-        ARDLINGANIMALS.innerHTML = RACE.sub[subraceRoll].animals;
+        ADDTEXTTOSPANS(subrace, '.ardlingLegacy');
+        ADDTEXTTOSPANS(RACE.sub[subraceRoll].align, '.ardlingAlign');
+        ADDTEXTTOSPANS(RACE.sub[subraceRoll].animals, '.ardlingAnimals');
     } else if (RACE.name === 'elf') {
-        const ELFDARKVISION = document.querySelector('.elfDarkvision');
-        const ELFLINEAGE = document.querySelector('.elfLineage');
-        ELFDARKVISION.innerHTML = RACE.sub[subraceRoll].darkvision;
-        ELFLINEAGE.innerHTML = RACE.sub[subraceRoll].feature;
+        ADDTEXTTOSPANS(RACE.sub[subraceRoll].darkvision, '.elfDarkvision');
+        ADDTEXTTOSPANS(RACE.sub[subraceRoll].feature, '.elfLineage');
     } else if (RACE.name === 'gnome') {
-        const GNOMELINEAGE = document.querySelector('.gnomeLineage');
-        GNOMELINEAGE.innerHTML = RACE.sub[subraceRoll].feature;
+        ADDTEXTTOSPANS(RACE.sub[subraceRoll].feature, '.gnomeLineage');
     } else if (RACE.name === 'tiefling') {
-        const TIEFLINGLEGACY = document.querySelector('.tieflingLegacy');
-        const TIEFLINGELEMENT = document.querySelector('.tieflingElement');
-        const TIEFLINGALIGN = document.querySelector('.tieflingAlign');
-        const TIEFLINGSPELL = document.querySelector('.tieflingSpell');
-        TIEFLINGLEGACY.innerHTML = RACE.sub[subraceRoll].name;
-        TIEFLINGELEMENT.innerHTML = RACE.sub[subraceRoll].type;
-        TIEFLINGALIGN.innerHTML = RACE.sub[subraceRoll].align;
-        TIEFLINGSPELL.innerHTML = RACE.sub[subraceRoll].spell[0];
+        ADDTEXTTOSPANS(RACE.sub[subraceRoll].name, '.tieflingLegacy');
+        ADDTEXTTOSPANS(RACE.sub[subraceRoll].type, '.tieflingElement');
+        ADDTEXTTOSPANS(RACE.sub[subraceRoll].align, '.tieflingAlign');
+        ADDTEXTTOSPANS(RACE.sub[subraceRoll].spell[0], '.tieflingSpell');
     };
     
     //Fill In Skills
@@ -322,4 +318,93 @@ CHARGEN.addEventListener('click', function() {
         }
     })
 
+    //Calculate Attribute Weights
+    let strWeight = 0;
+    let dexWeight = 0;
+    let conWeight = 0;
+    let intWeight = 0;
+    let wisWeight = 0;
+    let chaWeight = 0;
+    
+    //Apply Weight Based on Skills
+    SKILLARR.forEach(x => {
+        if (SKILLS[x] == "Str") {
+            strWeight += 1;
+        } else if (SKILLS[x] == "Dex") {
+            dexWeight += 1;
+        } else if (SKILLS[x] == "Int") {
+            intWeight += 1;
+        } else if (SKILLS[x] == "Wis") {
+            wisWeight += 1;
+        } else if (SKILLS[x] == "Cha") {
+            chaWeight += 1;
+        }
+    });
+
+    //Apply Weight Based on Race
+    if (RACE.name == "orc") {
+        strWeight += 1;
+    } else if (RACE.name == "dwarf" || RACE.name == "dragonborn") {
+        conWeight += 1;
+    }
+
+    //Apply Weight Based on Feats
+
+    //Sort attributes
+    let weightObj = {"Strength": strWeight, "Dexterity": dexWeight, "Constitution": conWeight, "Intelligence": intWeight, "Wisdom": wisWeight, "Charisma": chaWeight};
+
+    //Create an array of arrays, each inner array holding a key/value pair from weightObj, and sort from low to high
+    let sortedWeightArr = Object.entries(weightObj).sort(function(a,b) {
+        return a[1]-b[1];
+    })
+
+    //create a variable that holds the highest weight score
+    let highestWeight = sortedWeightArr[5][1];
+
+    let randomizedAtts = [];
+
+    //Iterate from the highestWeight down to 0
+    for (let i = highestWeight; i>= 0; i--) {
+        //Holds all attributes of weight i
+        let holder = [];
+        //Iterate over the length of the sortedWeightArr
+        for (let j = 0; j <= sortedWeightArr.length-1; j++) {
+            //If the weight of the attribute is equal to i, push it into the holder
+            if (sortedWeightArr[j][1] == i) {
+                holder.push(sortedWeightArr[j][0]);
+            }
+        }
+        //Iterate over the length of the holder, holding all attributes of weight i
+        for (let j = 0; j<= holder.length-1; j++) {
+            //Pick a random attribute
+            let randomAtt = ROLLER(holder.length);
+            //Dupe check, keep rerolling until the chosen value isn't already in the randomizedAtts array
+            while (randomizedAtts.indexOf(holder[randomAtt]) >= 0) {
+                    randomAtt = ROLLER(holder.length)
+            }
+            //Add attribute to the randomizedAtts array
+            randomizedAtts.push(holder[randomAtt]);
+        }
+    }
+
+    //Assign Attribute scores
+    let attArr = [15, 14, 13, 12, 10, 8];
+
+    for (let i = 0; i <= randomizedAtts.length; i++) {
+        if (randomizedAtts[i] == "Strength") {
+            STRSCORE.innerHTML = attArr[i];
+        } else if (randomizedAtts[i] == "Dexterity") {
+            DEXSCORE.innerHTML = attArr[i];
+        } else if (randomizedAtts[i] == "Constitution") {
+            CONSCORE.innerHTML = attArr[i];
+        } else if (randomizedAtts[i] == "Intelligence") {
+            INTSCORE.innerHTML = attArr[i];
+        } else if (randomizedAtts[i] == "Wisdom") {
+            WISSCORE.innerHTML = attArr[i];
+        } else if (randomizedAtts[i] == "Charisma") {
+            CHASCORE.innerHTML = attArr[i];
+        }
+    }
+
+    console.log('This is the sorted weight array: ' + sortedWeightArr + ' and here is the randomized attributes' + randomizedAtts)
 });
