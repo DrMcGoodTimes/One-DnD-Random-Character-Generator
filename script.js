@@ -39,7 +39,7 @@ const ADDTEXTTOSPANS = function(val, targetSpan) {
 };
 
 //D&D Information
-const SKILLS = {"Athletics": "Str", "Acrobatics": "Dex", "Sleight of Hand": "Dex", "Stealth": "Dex", "Arcana": "Int", "History": "Int", "Investigation": "Int", "Nature": "Int", "Religion": "Int", "Animal Handling": "Wis", "Insight": "Wis", "Medicine": "Wis", "Perception": "Wis", "Survival": "Wis", "Deception": "Cha", "Intimidation": "Cha", "Performance": "Cha", "Persuasion": "Cha"};
+const SKILLS = {"Athletics": "Strength", "Acrobatics": "Dexterity", "Sleight of Hand": "Dexterity", "Stealth": "Dexterity", "Arcana": "Intelligence", "History": "Intelligence", "Investigation": "Intelligence", "Nature": "Intelligence", "Religion": "Intelligence", "Animal Handling": "Wisdom", "Insight": "Wisdom", "Medicine": "Wisdom", "Perception": "Wisdom", "Survival": "Wisdom", "Deception": "Charisma", "Intimidation": "Charisma", "Performance": "Charisma", "Persuasion": "Charisma"};
 
 const FEATS = {
     'Alert': 'Always on the lookout for danger, you gain the following benefits:<br><span class="bold">Initiative Proficiency.</span> When you roll Initiative, you can add your Proficiency Bonus to the roll.<br><span class="bold">Initiative Swap.</span> Immediately after you roll Initiative, you can swap your Initiative with the Initiative of one willing ally in the same combat. You can\'t make this swap if you or the ally is incapacitated.<br>',
@@ -106,9 +106,79 @@ const RACES = [HUMAN, DWARF, HALFLING, ORC, DRAGONBORN, ARDLING, GNOME, TIEFLING
 
 const TOOLS = ['Alchemist\'s Supplies', 'Brewer\'s Supplies', 'Calligrapher\'s Supplies', 'Carpenter\'s Tools', 'Cartographer\'s Tools', 'Cobbler\'s Tools', 'Cook\'s Utensils', 'Glassblower\'s Tools', 'Jeweler\'s Tools', 'Leatherworker\'s Tools', 'Mason\'s Tools', 'Painter\'s Supplies', 'Potter\'s Tools', 'Smith\'s Tools', 'Tinker\'s Tools', 'Weaver\'s Tools', 'Woodcarver\'s Tools', 'Disguise Kit', 'Forgery Kit', 'Dice Set', 'Dragonchess Set', 'Playing Card Set', 'Three-Dragon Ante Set', 'Herbalism Kit', 'Bagpipes', 'Drum', 'Dulcimer', 'Flute', 'Lute', 'Lyre', 'Horn', 'Pan Flute', "Shawm", 'Viol', 'Navigator\'s Tool', 'Poisoner\'s Kit', 'Thieves\' Tools', 'Land Vehicles', 'Water Vehicles']
 
+const BARD = {
+    name: "bard",
+    group: "Expert",
+    primary: ["Charisma"],
+    hitdie: 8,
+    saves: ["Dexterity", "Charisma"],
+    suggestedskills: ["Deception", "Performance", "Persuasion"],
+    classskills: ["Athletics", "Acrobatics", "Sleight of Hand", "Stealth", "Arcana", "History", "Investigation", "Nature", "Religion", "Animal Handling", "Insight", "Medicine", "Perception", "Survival", "Deception", "Intimidation", "Performance", "Persuasion"],
+    weaponprofs: ["Simple Weapons"],
+    armorprofs: ["Light Armor"],
+    toolprofs: null, //3 musical instruments
+    featuresbylevel: {}
+};
+
+const RANGER = {
+    name: "ranger",
+    group: "Expert",
+    primary: ["Dexterity", "Wisdom"],
+    hitdie: 10,
+    saves: ["Strength", "Dexterity"],
+    suggestedskills: ["Athletics", "Stealth", "Survival"],
+    classskills: ["Athletics", "Stealth", "Investigation", "Nature", "Animal Handling", "Insight", "Perception", "Survival"],
+    weaponprofs: ["Simple Weapons", "Martial Weapons"],
+    armorprofs: ["Light Armor", "Medium Armor", "Shields"],
+    //toolprofs: null,
+    featuresbylevel: {}
+};
+
+const ROGUE = {
+    name: "rogue",
+    group: "Expert",
+    primary: ["Dexterity"],
+    hitdie: 8,
+    saves: ["Dexterity", "Intelligence"],
+    suggestedskills: ["Acrobatics", "Investigation", "Sleight of Hand", "Stealth"],
+    classskills: ["Athletics", "Acrobatics", "Sleight of Hand", "Stealth", "Investigation", "Insight", "Perception", "Deception", "Intimidation", "Persuasion"],
+    weaponprofs: ["Simple Weapons", "Martial Weapons with the Finesse Property"],
+    armorprofs: ["Light Armor"],
+    toolprofs: ["Thieves' Tools"],
+    featuresbylevel: {}
+};
+
+const CLASSES = [BARD, RANGER, ROGUE];
+
 //Generate Button
 CHARGEN.addEventListener('click', function() {
+    //This is where I'm making a character object for exporting in the future
+    const CHAROBJ = {
+        level: 1,
+        race: RACES[ROLLER(RACES.length)],
+        class: CLASSES[ROLLER(CLASSES.length)],
+        attributes: {
+            str: 0,
+            dex: 0,
+            con: 0,
+            int: 0,
+            wis: 0,
+            cha: 0
+        },
+        skills: [],
+        feats: [],
+        weaponprofs: [],
+        armorprofs: [],
+        toolprof: [],
+        spells: {}
+    };
+
+    if (CHAROBJ.race.hasOwnProperty('sub')) {
+        CHAROBJ.subrace = CHAROBJ.race.sub[ROLLER(CHAROBJ.race.sub.length)].name;
+    }
+
     //Assigning race and Lineage
+
     const RACE = RACES[ROLLER(RACES.length)];
     let subraceRoll;
     let subrace = "";
@@ -116,6 +186,7 @@ CHARGEN.addEventListener('click', function() {
         subraceRoll = ROLLER(RACE.sub.length);
         subrace = RACE.sub[subraceRoll].name;
     }
+    const CLASS = CLASSES[ROLLER(CLASSES.length)];
 
     //Assigning arrays for the purposes of checking dupes/futureproofing
     const SKILLARR = [];
@@ -127,7 +198,7 @@ CHARGEN.addEventListener('click', function() {
     const SPELLDUPEARR = [];
 
     //Setting the text onto the document
-    CHARHOLDER.innerHTML = `You are a ${subrace} ${RACE.name} with the following abilities:
+    CHARHOLDER.innerHTML = `You are a ${subrace} ${RACE.name} ${CLASS.name} with the following abilities:
 
         <div id='raceFeatures'></div>
         
@@ -147,7 +218,6 @@ CHARGEN.addEventListener('click', function() {
         `;
 
     //Tagetting Generated HTML Elements
-    const GENDERSPAN = document.querySelector('#genderSpan');
     const RACEFEATURES = document.querySelector('#raceFeatures');
     const SKILLLIST = document.querySelector('#skillList');
     const TOOLLIST = document.querySelector('#toolList');
@@ -328,15 +398,15 @@ CHARGEN.addEventListener('click', function() {
     
     //Apply Weight Based on Skills
     SKILLARR.forEach(x => {
-        if (SKILLS[x] == "Str") {
+        if (SKILLS[x] == "Strength") {
             strWeight += 1;
-        } else if (SKILLS[x] == "Dex") {
+        } else if (SKILLS[x] == "Dexterity") {
             dexWeight += 1;
-        } else if (SKILLS[x] == "Int") {
+        } else if (SKILLS[x] == "Intelligence") {
             intWeight += 1;
-        } else if (SKILLS[x] == "Wis") {
+        } else if (SKILLS[x] == "Wisdom") {
             wisWeight += 1;
-        } else if (SKILLS[x] == "Cha") {
+        } else if (SKILLS[x] == "Charisma") {
             chaWeight += 1;
         }
     });
@@ -349,6 +419,8 @@ CHARGEN.addEventListener('click', function() {
     }
 
     //Apply Weight Based on Feats
+
+
 
     //Sort attributes
     let weightObj = {"Strength": strWeight, "Dexterity": dexWeight, "Constitution": conWeight, "Intelligence": intWeight, "Wisdom": wisWeight, "Charisma": chaWeight};
@@ -407,4 +479,6 @@ CHARGEN.addEventListener('click', function() {
     }
 
     console.log('This is the sorted weight array: ' + sortedWeightArr + ' and here is the randomized attributes' + randomizedAtts)
+
+    console.log(CHAROBJ);
 });
